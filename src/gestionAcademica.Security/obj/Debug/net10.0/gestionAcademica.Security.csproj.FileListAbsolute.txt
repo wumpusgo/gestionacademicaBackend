@@ -1,0 +1,12 @@
+/home/miguel/sources/gestionAcademica/target/GestionAcademicaBackend/src/gestionAcademica.Security/bin/Debug/net10.0/gestionAcademica.Security.deps.json
+/home/miguel/sources/gestionAcademica/target/GestionAcademicaBackend/src/gestionAcademica.Security/bin/Debug/net10.0/gestionAcademica.Security.dll
+/home/miguel/sources/gestionAcademica/target/GestionAcademicaBackend/src/gestionAcademica.Security/bin/Debug/net10.0/gestionAcademica.Security.pdb
+/home/miguel/sources/gestionAcademica/target/GestionAcademicaBackend/src/gestionAcademica.Security/obj/Debug/net10.0/gestionAcademica.Security.csproj.AssemblyReference.cache
+/home/miguel/sources/gestionAcademica/target/GestionAcademicaBackend/src/gestionAcademica.Security/obj/Debug/net10.0/gestionAcademica.Security.GeneratedMSBuildEditorConfig.editorconfig
+/home/miguel/sources/gestionAcademica/target/GestionAcademicaBackend/src/gestionAcademica.Security/obj/Debug/net10.0/gestionAcademica.Security.AssemblyInfoInputs.cache
+/home/miguel/sources/gestionAcademica/target/GestionAcademicaBackend/src/gestionAcademica.Security/obj/Debug/net10.0/gestionAcademica.Security.AssemblyInfo.cs
+/home/miguel/sources/gestionAcademica/target/GestionAcademicaBackend/src/gestionAcademica.Security/obj/Debug/net10.0/gestionAcademica.Security.csproj.CoreCompileInputs.cache
+/home/miguel/sources/gestionAcademica/target/GestionAcademicaBackend/src/gestionAcademica.Security/obj/Debug/net10.0/gestionAcademica.Security.dll
+/home/miguel/sources/gestionAcademica/target/GestionAcademicaBackend/src/gestionAcademica.Security/obj/Debug/net10.0/refint/gestionAcademica.Security.dll
+/home/miguel/sources/gestionAcademica/target/GestionAcademicaBackend/src/gestionAcademica.Security/obj/Debug/net10.0/gestionAcademica.Security.pdb
+/home/miguel/sources/gestionAcademica/target/GestionAcademicaBackend/src/gestionAcademica.Security/obj/Debug/net10.0/ref/gestionAcademica.Security.dll

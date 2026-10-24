@@ -1,0 +1,7 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/gestionAcademica.Core/gestionAcademica.Core.csproj" />
+    <Project Path="src/gestionAcademica.Security/gestionAcademica.Security.csproj" />
+    <Project Path="src/gestionAcademica.Web/gestionAcademica.Web.csproj" />
+  </Folder>
+</Solution>
