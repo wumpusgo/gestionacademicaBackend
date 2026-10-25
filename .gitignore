@@ -1,0 +1,27 @@
+# Binarios y objetos de compilación
+[Bb]in/
+[Oo]bj/
+
+# Archivos de Visual Studio
+.vs/
+*.user
+*.suo
+*.njsproj
+*.sln.backup
+*.sw9
+
+# Archivos de Visual Studio Code
+.vscode/
+
+# Dependencias de paquetes (NuGet)
+packages/
+*.nuget.cache
+
+# Archivos de configuración y secretos (opcional, según tu flujo)
+appsettings.Development.json
+secrets.json
+
+# Archivos temporales del sistema
+Thumbs.db
+ehthumbs.db
+*.tmp
