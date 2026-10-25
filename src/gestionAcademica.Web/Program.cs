@@ -2,6 +2,8 @@ using System.Text;
 using gestionAcademica.Security;
 using gestionAcademica.Security.Data;
 using gestionAcademica.Security.Models;
+using gestionAcademica.Services;
+using gestionAcademica.Services.Security;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -49,6 +51,8 @@ builder
     });
 
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<SecurityDataService>();
+builder.Services.AddScoped<ModelDataService>();
 builder.Services.AddControllers();
 builder.Services.AddAuthorization();
 
@@ -69,7 +73,12 @@ using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     var context = services.GetRequiredService<ApplicationDbContext>();
-    DbInitializer.SeedAsync(context).GetAwaiter().GetResult();
+    var securityDataService = services.GetRequiredService<SecurityDataService>();
+    var modelDataService = services.GetRequiredService<ModelDataService>();
+    DbInitializer
+        .SeedApplicationDataAsync(context, securityDataService, modelDataService)
+        .GetAwaiter()
+        .GetResult();
 }
 
 if (app.Environment.IsDevelopment())

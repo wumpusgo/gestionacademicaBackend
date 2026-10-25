@@ -154,6 +154,96 @@ namespace gestionAcademica.Security.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("gestionAcademica.Core.Entities.Clase", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("IdMateria")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("IdProfesor")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdMateria");
+
+                    b.HasIndex("IdProfesor");
+
+                    b.ToTable("Clases");
+                });
+
+            modelBuilder.Entity("gestionAcademica.Core.Entities.Estudiante", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Estudiiantes");
+                });
+
+            modelBuilder.Entity("gestionAcademica.Core.Entities.Materia", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<int>("Creditos")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Materias");
+                });
+
+            modelBuilder.Entity("gestionAcademica.Core.Entities.Profesor", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Profesores");
+                });
+
+            modelBuilder.Entity("gestionAcademica.Core.Entities.ProgramaAcademico", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("IdClase")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("IdEstudiante")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdClase");
+
+                    b.HasIndex("IdEstudiante");
+
+                    b.ToTable("ProgramasAcademicos");
+                });
+
             modelBuilder.Entity("gestionAcademica.Security.Models.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
@@ -274,6 +364,59 @@ namespace gestionAcademica.Security.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("gestionAcademica.Core.Entities.Clase", b =>
+                {
+                    b.HasOne("gestionAcademica.Core.Entities.Materia", "Materia")
+                        .WithMany("Clases")
+                        .HasForeignKey("IdMateria")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("gestionAcademica.Core.Entities.Profesor", "Profesor")
+                        .WithMany("Clases")
+                        .HasForeignKey("IdProfesor")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Materia");
+
+                    b.Navigation("Profesor");
+                });
+
+            modelBuilder.Entity("gestionAcademica.Core.Entities.ProgramaAcademico", b =>
+                {
+                    b.HasOne("gestionAcademica.Core.Entities.Clase", "Clase")
+                        .WithMany("ProgramasAcademicos")
+                        .HasForeignKey("IdClase")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("gestionAcademica.Core.Entities.Estudiante", "Estudiante")
+                        .WithMany()
+                        .HasForeignKey("IdEstudiante")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Clase");
+
+                    b.Navigation("Estudiante");
+                });
+
+            modelBuilder.Entity("gestionAcademica.Core.Entities.Clase", b =>
+                {
+                    b.Navigation("ProgramasAcademicos");
+                });
+
+            modelBuilder.Entity("gestionAcademica.Core.Entities.Materia", b =>
+                {
+                    b.Navigation("Clases");
+                });
+
+            modelBuilder.Entity("gestionAcademica.Core.Entities.Profesor", b =>
+                {
+                    b.Navigation("Clases");
                 });
 #pragma warning restore 612, 618
         }

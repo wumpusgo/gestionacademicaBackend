@@ -17,4 +17,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.0" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.0.0" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\gestionAcademica.Core\gestionAcademica.Core.csproj" />
+  </ItemGroup>
 </Project>

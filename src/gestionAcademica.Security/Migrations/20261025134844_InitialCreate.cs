@@ -73,6 +73,49 @@ namespace gestionAcademica.Security.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "Estudiiantes",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    Nombre = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Estudiiantes", x => x.Id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "Materias",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    Nombre = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Creditos = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Materias", x => x.Id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "Profesores",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    Nombre = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Profesores", x => x.Id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -199,6 +242,58 @@ namespace gestionAcademica.Security.Migrations
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
+            migrationBuilder.CreateTable(
+                name: "Clases",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    IdMateria = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    IdProfesor = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Clases", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Clases_Materias_IdMateria",
+                        column: x => x.IdMateria,
+                        principalTable: "Materias",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Clases_Profesores_IdProfesor",
+                        column: x => x.IdProfesor,
+                        principalTable: "Profesores",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "ProgramasAcademicos",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    IdClase = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    IdEstudiante = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProgramasAcademicos", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ProgramasAcademicos_Clases_IdClase",
+                        column: x => x.IdClase,
+                        principalTable: "Clases",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ProgramasAcademicos_Estudiiantes_IdEstudiante",
+                        column: x => x.IdEstudiante,
+                        principalTable: "Estudiiantes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -235,6 +330,26 @@ namespace gestionAcademica.Security.Migrations
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Clases_IdMateria",
+                table: "Clases",
+                column: "IdMateria");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Clases_IdProfesor",
+                table: "Clases",
+                column: "IdProfesor");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProgramasAcademicos_IdClase",
+                table: "ProgramasAcademicos",
+                column: "IdClase");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProgramasAcademicos_IdEstudiante",
+                table: "ProgramasAcademicos",
+                column: "IdEstudiante");
         }
 
         /// <inheritdoc />
@@ -256,10 +371,25 @@ namespace gestionAcademica.Security.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "ProgramasAcademicos");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Clases");
+
+            migrationBuilder.DropTable(
+                name: "Estudiiantes");
+
+            migrationBuilder.DropTable(
+                name: "Materias");
+
+            migrationBuilder.DropTable(
+                name: "Profesores");
         }
     }
 }
