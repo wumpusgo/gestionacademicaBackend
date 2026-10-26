@@ -12,7 +12,7 @@ using gestionAcademica.Security.Data;
 namespace gestionAcademica.Security.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20261025134844_InitialCreate")]
+    [Migration("20261026031015_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -240,10 +240,6 @@ namespace gestionAcademica.Security.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdClase");
-
-                    b.HasIndex("IdEstudiante");
-
                     b.ToTable("ProgramasAcademicos");
                 });
 
@@ -386,30 +382,6 @@ namespace gestionAcademica.Security.Migrations
                     b.Navigation("Materia");
 
                     b.Navigation("Profesor");
-                });
-
-            modelBuilder.Entity("gestionAcademica.Core.Entities.ProgramaAcademico", b =>
-                {
-                    b.HasOne("gestionAcademica.Core.Entities.Clase", "Clase")
-                        .WithMany("ProgramasAcademicos")
-                        .HasForeignKey("IdClase")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("gestionAcademica.Core.Entities.Estudiante", "Estudiante")
-                        .WithMany()
-                        .HasForeignKey("IdEstudiante")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Clase");
-
-                    b.Navigation("Estudiante");
-                });
-
-            modelBuilder.Entity("gestionAcademica.Core.Entities.Clase", b =>
-                {
-                    b.Navigation("ProgramasAcademicos");
                 });
 
             modelBuilder.Entity("gestionAcademica.Core.Entities.Materia", b =>

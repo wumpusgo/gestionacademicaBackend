@@ -6,6 +6,6 @@ public class ProgramaAcademico
     public Guid IdClase { get; set; }
     public Guid IdEstudiante { get; set; }
 
-    public Clase Clase { get; set; } = default!;
-    public Estudiante Estudiante { get; set; } = default!;
+    // public Clase? Clase { get; set; }
+    // public Estudiante? Estudiante { get; set; }
 }

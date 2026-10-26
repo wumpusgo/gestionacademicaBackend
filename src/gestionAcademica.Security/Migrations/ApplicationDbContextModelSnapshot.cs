@@ -237,10 +237,6 @@ namespace gestionAcademica.Security.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdClase");
-
-                    b.HasIndex("IdEstudiante");
-
                     b.ToTable("ProgramasAcademicos");
                 });
 
@@ -383,30 +379,6 @@ namespace gestionAcademica.Security.Migrations
                     b.Navigation("Materia");
 
                     b.Navigation("Profesor");
-                });
-
-            modelBuilder.Entity("gestionAcademica.Core.Entities.ProgramaAcademico", b =>
-                {
-                    b.HasOne("gestionAcademica.Core.Entities.Clase", "Clase")
-                        .WithMany("ProgramasAcademicos")
-                        .HasForeignKey("IdClase")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("gestionAcademica.Core.Entities.Estudiante", "Estudiante")
-                        .WithMany()
-                        .HasForeignKey("IdEstudiante")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Clase");
-
-                    b.Navigation("Estudiante");
-                });
-
-            modelBuilder.Entity("gestionAcademica.Core.Entities.Clase", b =>
-                {
-                    b.Navigation("ProgramasAcademicos");
                 });
 
             modelBuilder.Entity("gestionAcademica.Core.Entities.Materia", b =>

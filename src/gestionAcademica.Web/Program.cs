@@ -4,6 +4,8 @@ using gestionAcademica.Security.Data;
 using gestionAcademica.Security.Models;
 using gestionAcademica.Services;
 using gestionAcademica.Services.Security;
+using gestionAcademica.Web.Interfaces;
+using gestionAcademica.Web.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -11,8 +13,6 @@ using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
 // Configure DbContext
@@ -23,7 +23,6 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     )
 );
 
-// Register Identity
 builder
     .Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
     {
@@ -51,10 +50,17 @@ builder
     });
 
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IProgramaAcademicoService, ProgramaAcademicoService>();
+builder.Services.AddScoped<IClaseService, ClaseService>();
+builder.Services.AddScoped<IEstudianteService, EstudianteService>();
+builder.Services.AddScoped<IMateriaService, MateriaService>();
+builder.Services.AddScoped<IProfesorService, ProfesorService>();
 builder.Services.AddScoped<SecurityDataService>();
 builder.Services.AddScoped<ModelDataService>();
 builder.Services.AddControllers();
 builder.Services.AddAuthorization();
+
+builder.Services.AddAutoMapper(typeof(Program));
 
 builder.Services.AddCors(options =>
 {
@@ -87,7 +93,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+Microsoft.IdentityModel.Logging.IdentityModelEventSource.ShowPII = true;
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();

@@ -116,6 +116,20 @@ namespace gestionAcademica.Security.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "ProgramasAcademicos",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    IdClase = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    IdEstudiante = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProgramasAcademicos", x => x.Id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -268,32 +282,6 @@ namespace gestionAcademica.Security.Migrations
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.CreateTable(
-                name: "ProgramasAcademicos",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    IdClase = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    IdEstudiante = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ProgramasAcademicos", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ProgramasAcademicos_Clases_IdClase",
-                        column: x => x.IdClase,
-                        principalTable: "Clases",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ProgramasAcademicos_Estudiiantes_IdEstudiante",
-                        column: x => x.IdEstudiante,
-                        principalTable: "Estudiiantes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -340,16 +328,6 @@ namespace gestionAcademica.Security.Migrations
                 name: "IX_Clases_IdProfesor",
                 table: "Clases",
                 column: "IdProfesor");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProgramasAcademicos_IdClase",
-                table: "ProgramasAcademicos",
-                column: "IdClase");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProgramasAcademicos_IdEstudiante",
-                table: "ProgramasAcademicos",
-                column: "IdEstudiante");
         }
 
         /// <inheritdoc />
@@ -371,6 +349,12 @@ namespace gestionAcademica.Security.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Clases");
+
+            migrationBuilder.DropTable(
+                name: "Estudiiantes");
+
+            migrationBuilder.DropTable(
                 name: "ProgramasAcademicos");
 
             migrationBuilder.DropTable(
@@ -378,12 +362,6 @@ namespace gestionAcademica.Security.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "Clases");
-
-            migrationBuilder.DropTable(
-                name: "Estudiiantes");
 
             migrationBuilder.DropTable(
                 name: "Materias");

@@ -1,8 +1,8 @@
+using AutoMapper;
 using gestionAcademica.Core.Entities;
+using gestionAcademica.Security.Data;
 using gestionAcademica.Web.Interfaces;
 using gestionAcademica.Web.Models;
-using gestionAcademica.Security.Data;
-using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 
 namespace gestionAcademica.Web.Services;
@@ -30,6 +30,54 @@ public class ProgramaAcademicoService : IProgramaAcademicoService
         return _mapper.Map<IEnumerable<ProgramaAcademicoDto>>(entities);
     }
 
+    public async Task<IEnumerable<ProgramaAcademicoDto>> GetByEstudianteIdAsync(Guid estudianteId)
+    {
+        var entities = await _context
+            .ProgramasAcademicos.Where(p => p.IdEstudiante == estudianteId)
+            .ToListAsync();
+        return _mapper.Map<IEnumerable<ProgramaAcademicoDto>>(entities);
+    }
+
+    public async Task<IEnumerable<ClaseDto>> GetClasesByEstudianteIdAsync(Guid estudianteId)
+    {
+        var entities = await _context
+            .ProgramasAcademicos.Where(p => p.IdEstudiante == estudianteId)
+            .ToListAsync();
+
+        var clases = new List<Clase>();
+        foreach (var entity in entities)
+        {
+            var clase = await _context.Clases.FindAsync(entity.IdClase);
+            if (clase != null)
+            {
+                clases.Add(clase);
+            }
+        }
+
+        return _mapper.Map<IEnumerable<ClaseDto>>(clases);
+    }
+
+    public async Task<IEnumerable<ClaseDto>> GetAvailableClasesByEstudianteIdAsync(
+        Guid estudianteId
+    )
+    {
+        var entities = await _context
+            .ProgramasAcademicos.Where(p => p.IdEstudiante == estudianteId)
+            .ToListAsync();
+
+        var clases = await _context.Clases.ToListAsync();
+        foreach (var entity in entities)
+        {
+            var c = await _context.Clases.FindAsync(entity.IdClase);
+            if (c != null)
+            {
+                clases.Remove(c);
+            }
+        }
+
+        return _mapper.Map<IEnumerable<ClaseDto>>(clases);
+    }
+
     public async Task<ProgramaAcademico> CreateAsync(ProgramaAcademicoDto programaAcademico)
     {
         var entity = _mapper.Map<ProgramaAcademico>(programaAcademico);
@@ -42,7 +90,7 @@ public class ProgramaAcademicoService : IProgramaAcademicoService
     {
         var entity = _mapper.Map<ProgramaAcademico>(programaAcademico);
         var existing = await _context.ProgramasAcademicos.FindAsync(entity.Id);
-        
+
         if (existing == null)
         {
             return false;
@@ -62,6 +110,33 @@ public class ProgramaAcademicoService : IProgramaAcademicoService
         }
 
         _context.ProgramasAcademicos.Remove(entity);
+        var result = await _context.SaveChangesAsync() > 0;
+        return result;
+    }
+
+    public async Task<bool> CreateNewProgram(
+        Guid idEstudiante,
+        List<ProgramaAcademicoDto> programasAcademicos
+    )
+    {
+        if (programasAcademicos == null || programasAcademicos.Count != 3)
+        {
+            return false;
+        }
+
+        var existingPrograms = _context
+            .ProgramasAcademicos.Where(p => p.IdEstudiante == idEstudiante)
+            .ToList();
+
+        _context.ProgramasAcademicos.RemoveRange(existingPrograms);
+
+        foreach (var dto in programasAcademicos)
+        {
+            var entity = _mapper.Map<ProgramaAcademico>(dto);
+            entity.IdEstudiante = idEstudiante;
+            _context.ProgramasAcademicos.Add(entity);
+        }
+
         var result = await _context.SaveChangesAsync() > 0;
         return result;
     }

@@ -8,10 +8,24 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
-        CreateMap<ProgramaAcademico, ProgramaAcademicoDto>()
-            .ForAllMembers(opt => opt.MapFrom(src => src));
+        CreateMap<ProgramaAcademico, ProgramaAcademicoDto>();
 
-        CreateMap<ProgramaAcademicoDto, ProgramaAcademico>()
-            .ForAllMembers(opt => opt.MapFrom(src => src));
+        CreateMap<ProgramaAcademicoDto, ProgramaAcademico>();
+
+        CreateMap<Clase, ClaseDto>();
+
+        CreateMap<ClaseDto, Clase>();
+
+        CreateMap<Estudiante, EstudianteDto>();
+
+        CreateMap<EstudianteDto, Estudiante>();
+
+        CreateMap<Materia, MateriaDto>();
+
+        CreateMap<MateriaDto, Materia>();
+
+        CreateMap<Profesor, ProfesorDto>();
+
+        CreateMap<ProfesorDto, Profesor>();
     }
 }

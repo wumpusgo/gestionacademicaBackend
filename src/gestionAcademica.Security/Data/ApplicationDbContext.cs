@@ -40,17 +40,17 @@ namespace gestionAcademica.Security.Data
 
             modelBuilder.Entity<ProgramaAcademico>().HasKey(pa => pa.Id);
 
-            modelBuilder
-                .Entity<ProgramaAcademico>()
-                .HasOne(pa => pa.Clase)
-                .WithMany(c => c.ProgramasAcademicos)
-                .HasForeignKey(pa => pa.IdClase);
-
-            modelBuilder
-                .Entity<ProgramaAcademico>()
-                .HasOne(pa => pa.Estudiante)
-                .WithMany()
-                .HasForeignKey(pa => pa.IdEstudiante);
+            // modelBuilder
+            //     .Entity<ProgramaAcademico>()
+            //     .HasOne(pa => pa.Clase)
+            //     .WithMany(c => c.ProgramasAcademicos)
+            //     .HasForeignKey(pa => pa.IdClase);
+            //
+            // modelBuilder
+            //     .Entity<ProgramaAcademico>()
+            //     .HasOne(pa => pa.Estudiante)
+            //     .WithMany()
+            //     .HasForeignKey(pa => pa.IdEstudiante);
         }
     }
 }
