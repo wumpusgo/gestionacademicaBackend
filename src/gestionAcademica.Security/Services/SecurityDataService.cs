@@ -24,6 +24,7 @@ namespace gestionAcademica.Services.Security
                     users.Add(
                         new ApplicationUser
                         {
+                            Id = estudiantes[i].Id,
                             UserName = estudiantes[i].UserName,
                             Email = estudiantes[i].Email,
                             Name = estudiantes[i].Name,

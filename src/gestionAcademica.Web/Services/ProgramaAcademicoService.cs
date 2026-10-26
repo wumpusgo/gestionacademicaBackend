@@ -38,6 +38,14 @@ public class ProgramaAcademicoService : IProgramaAcademicoService
         return _mapper.Map<IEnumerable<ProgramaAcademicoDto>>(entities);
     }
 
+    public async Task<IEnumerable<ProgramaAcademicoDto>> GetByClaseIdAsync(Guid claseId)
+    {
+        var entities = await _context
+            .ProgramasAcademicos.Where(p => p.IdClase == claseId)
+            .ToListAsync();
+        return _mapper.Map<IEnumerable<ProgramaAcademicoDto>>(entities);
+    }
+
     public async Task<IEnumerable<ClaseDto>> GetClasesByEstudianteIdAsync(Guid estudianteId)
     {
         var entities = await _context

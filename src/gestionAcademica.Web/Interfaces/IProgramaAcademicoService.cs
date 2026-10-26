@@ -14,4 +14,5 @@ public interface IProgramaAcademicoService
     Task<bool> CreateNewProgram(Guid idEstudiante, List<ProgramaAcademicoDto> programasAcademicos);
     Task<IEnumerable<ClaseDto>> GetClasesByEstudianteIdAsync(Guid estudianteId);
     Task<IEnumerable<ClaseDto>> GetAvailableClasesByEstudianteIdAsync(Guid estudianteId);
+    Task<IEnumerable<ProgramaAcademicoDto>> GetByClaseIdAsync(Guid claseId);
 }

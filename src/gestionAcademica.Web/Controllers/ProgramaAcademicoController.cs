@@ -1,3 +1,4 @@
+using System.Linq;
 using gestionAcademica.Web.Interfaces;
 using gestionAcademica.Web.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -48,6 +49,17 @@ public class ProgramaAcademicoController : ControllerBase
         return Ok(result);
     }
 
+    [HttpGet("clase/{claseId}")]
+    public async Task<ActionResult<IEnumerable<ProgramaAcademicoDto>>> GetByClaseId(Guid claseId)
+    {
+        var result = await _service.GetByClaseIdAsync(claseId);
+        if (result == null)
+        {
+            return NotFound();
+        }
+        return Ok(result);
+    }
+
     [HttpGet("registeredClasses/{estudianteId}")]
     public async Task<ActionResult<IEnumerable<ProgramaAcademicoDto>>> GetClasesByEstudianteId(
         Guid estudianteId
@@ -88,6 +100,21 @@ public class ProgramaAcademicoController : ControllerBase
         [FromBody] CreateNewProgramRequest request
     )
     {
+        if (request.ProgramasAcademicos == null)
+        {
+            return BadRequest("ProgramasAcademicos list is required.");
+        }
+
+        var professorIds = request
+            .ProgramasAcademicos.Where(p => p.Clase != null)
+            .Select(p => p.Clase.IdProfesor)
+            .ToList();
+
+        if (professorIds.Distinct().Count() != professorIds.Count)
+        {
+            return BadRequest("Duplicate IdProfesor found.");
+        }
+
         var result = await _service.CreateNewProgram(
             request.IdEstudiante,
             request.ProgramasAcademicos

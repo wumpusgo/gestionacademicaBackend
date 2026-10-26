@@ -26,7 +26,9 @@ namespace gestionAcademica.Services
 
                 foreach (var estudiante in estudiantes)
                 {
-                    users.Add(new Estudiante { Id = Guid.NewGuid(), Nombre = estudiante.Name });
+                    users.Add(
+                        new Estudiante { Id = Guid.Parse(estudiante.Id), Nombre = estudiante.Name }
+                    );
                 }
                 await context.Estudiiantes.AddRangeAsync(users);
                 await context.SaveChangesAsync();
